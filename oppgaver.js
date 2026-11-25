@@ -25,64 +25,139 @@ const temperaturer = [-4, -6, -2, 1, -8, -11, -3];
 //     hilsen("Ola") -> "Hei, Ola!"
 //     Tips: bruk en template literal: `Hei, ${navn}!`
 function hilsen(navn) {
-  // LØSNING
+  return `Hei, ${navn}!`;
 }
+console.log("\nOppgave 1:");
+console.log(hilsen("Ola"));
 
 // Oppgave 2: Hvor mange blokker trengs til gulvet i en hytte på 4 x 5 blokker?
 //     Returner arealet av et rektangel (bredde ganger høyde)
 function rektangelAreal(bredde, hoyde) {
-  // LØSNING
+  return bredde * hoyde;
 }
+console.log("\nOppgave 2:");
+console.log(rektangelAreal(4, 5));
 
 // Oppgave 3: En venn i USA spør på Discord hvor kaldt det er i Tromsø.
 //     Temperaturen er -6 grader C. 
 //     Gjør om celsius til fahrenheit.  Formel: F = C * 9/5 + 32
 //     (Den motsatte formelen er C = (F - 32) * 5/9.)
 function celsiusTilFahrenheit(celsius) {
-  // LØSNING
+  return celsius * 9/5 + 32;
 }
-
+console.log("\nOppgave 3:");
+console.log(celsiusTilFahrenheit(-6));
 
 // ---------- GUL ----------
 
 // Oppgave 4: Værappen skal regne ut ukas gjennomsnitt. Første steg: summen.
 //     Returner summen av alle tallene i en array. Bruk en for-løkke.
 function sum(tall) {
-  // LØSNING
+  let sum = 0;
+  for (let i = 0; i < tall.length; i++) {
+    sum += tall[i];
+  }
+  return sum;
 }
+console.log("\nOppgave 4:");
+console.log(sum(temperaturer));
 
 // Oppgave 5: Returner gjennomsnittet av tallene. Gjenbruk sum()!
 function gjennomsnitt(tall) {
-  // LØSNING
+  return sum(tall) / tall.length;
 }
+console.log("\nOppgave 5:");
+console.log(gjennomsnitt(temperaturer));
 
 // Oppgave 6: Hvor mange dager med kuldegrader var det? (Trenger du vinterdekk?)
 //     Returner HVOR MANGE tall som er under 0. Bruk for-løkke + if.
 function antallUnderNull(tall) {
-  // LØSNING
+  let antall = 0;
+  for (let i = 0; i < tall.length; i++) {
+    if (tall[i] < 0) {
+      antall++;
+    }
+  }
+  return antall;
 }
-
+console.log("\nOppgave 6:");
+console.log(antallUnderNull(temperaturer));
 
 // ---------- RØD ----------
 
 // Oppgave 7: Hva var den varmeste dagen? Samme logikk som en highscore-liste.
 //     Returner det største tallet i arrayen – UTEN Math.max og UTEN .sort()
 function storste(tall) {
-  // LØSNING
+  let høyeste = tall[0];
+  for (let i = 1; i < tall.length; i++) {
+    if (høyeste < tall[i]) {
+      høyeste = tall[i];
+    }
+  }
+  return høyeste;
 }
+console.log("\nOppgave 7:");
+console.log(storste(temperaturer));
 
 // Oppgave 8: Returner en NY array med bare kuldegradene (tall under 0).
 //     Den opprinnelige arrayen skal ikke endres.
 function bareKuldegrader(tall) {
-  // LØSNING
+  let cool_array = [];
+  for (let i = 0; i < tall.length; i++) {
+    if (tall[i] < 0) {
+      cool_array.push(tall[i]);
+    }
+  }
+  return cool_array;
 }
+console.log("\nOppgave 8:");
+console.log(bareKuldegrader(temperaturer));
 
 // Oppgave 9: Sorter tallene fra lavest til høyest – UTEN .sort().
 //     Lag din egen sorteringsalgoritme (f.eks. boblesortering).
 //     Returner en NY array, ikke endre den opprinnelige.
 function sorterStigende(tall) {
-  // LØSNING
+  let sortert_array = tall;
+  let sortert = false;
+  let riktig_rekefølge_array = [];
+  for (let i = 0; i < sortert_array.length - 1; i++){
+    riktig_rekefølge_array.push(false);
+  }
+  for (let i = 0; i < sortert_array.length; i++) { console.log(sortert_array[i])}
+  for (let i = 0; i < riktig_rekefølge_array.length; i++) { console.log(riktig_rekefølge_array[i])}
+  
+  let temp;
+  while (sortert == false) {
+
+    sortert = true;
+    for (let i = 0; i < riktig_rekefølge_array.length; i++){
+      if (riktig_rekefølge_array[i] == false){
+        sortert = false;
+      }
+    }
+    if (sortert == true) {
+      console.log("brake bake")
+      break;
+    }
+    
+    for (let i = 0; i < riktig_rekefølge_array.length; i++){
+      
+      if (sortert_array[i] < sortert_array[i+1]){
+        riktig_rekefølge_array[i] = true;
+      } else {
+        temp = sortert_array[i];
+        sortert_array[i] = sortert_array[i+1];
+        sortert_array[i+1] = temp;
+      }
+
+    }
+
+  }
+
+  return sortert_array;
 }
+console.log("\nOppgave 9:");
+console.log(sorterStigende(temperaturer));
 
 
 // #####################################################
@@ -228,18 +303,4 @@ function toppTre(resultater) {
 // Skriv en kort egenvurdering av arbeidet ditt. Skriv rett etter kolonet.
 // Dette fikk jeg godt til:
 // Dette var vanskelig:
-<<<<<<< Updated upstream
 // Dette vil jeg øve mer på:
-
-
-
-
-
-
-
-
-
-
-=======
-// Dette vil jeg øve mer på:
->>>>>>> Stashed changes
