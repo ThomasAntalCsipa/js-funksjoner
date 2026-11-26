@@ -117,17 +117,19 @@ console.log(bareKuldegrader(temperaturer));
 //     Lag din egen sorteringsalgoritme (f.eks. boblesortering).
 //     Returner en NY array, ikke endre den opprinnelige.
 function sorterStigende(tall) {
+  // boble sort
   let sortert_array = tall;
   let sortert = false;
   let riktig_rekefølge_array = [];
   for (let i = 0; i < sortert_array.length - 1; i++){
     riktig_rekefølge_array.push(false);
   }
-  for (let i = 0; i < sortert_array.length; i++) { console.log(sortert_array[i])}
-  for (let i = 0; i < riktig_rekefølge_array.length; i++) { console.log(riktig_rekefølge_array[i])}
   
   let temp;
   while (sortert == false) {
+
+    //console.log("\n",sortert_array);
+    //console.log(riktig_rekefølge_array);
 
     sortert = true;
     for (let i = 0; i < riktig_rekefølge_array.length; i++){
@@ -136,7 +138,7 @@ function sorterStigende(tall) {
       }
     }
     if (sortert == true) {
-      console.log("brake bake")
+      //console.log("brake bake")
       break;
     }
     
@@ -148,6 +150,7 @@ function sorterStigende(tall) {
         temp = sortert_array[i];
         sortert_array[i] = sortert_array[i+1];
         sortert_array[i+1] = temp;
+        riktig_rekefølge_array[i] = false;
       }
 
     }
@@ -174,25 +177,37 @@ const runder = [120, 85, 140, 95, 110];
 // skal inkluderes i brukernavnet. Vi får da: Gamertag = navn + tall.
 //     lagGamertag("Ola", 99) -> "Ola99"
 function lagGamertag(navn, tall) {
-  // LØSNING
+  return navn + tall;
 }
-
+console.log("\nOppgave 10:");
+console.log(lagGamertag("Ola", 99));
 
 // Oppgave 11: Er spilleren gammel nok til spillet? Returner true eller false.
 //     erGammelNok(16, 18) -> false
 //     erGammelNok(18, 18) -> true
 //     Tips: return alder >= grense;  (sammenligningen gir true/false)
 function erGammelNok(alder, grense) {
-  // LØSNING
+  if (alder < grense) {
+    return false;
+  } else {
+    return true;
+  }
 }
+console.log("\nOppgave 11:");
+console.log(erGammelNok(16,18));
+console.log(erGammelNok(18,18));
 
 // Oppgave 12: BreiLAN innfører billettpriser. VG1 betaler 100 kr og resten av skolen 150 kr.
 //     Lag en funksjon som sjekker om eleven går på VG1 og gir riktig pris.
 //     billettpris(true)  -> 100
 //     billettpris(false) -> 150
 //     Tips: bruk if og else.
-function billettpris(erVG1) {
-  // LØSNING
+function billettpris(VG_nummer) {
+  if (VG_nummer == 1){
+    return 100;
+  } else {
+    return 150;
+  }
 }
 
 
