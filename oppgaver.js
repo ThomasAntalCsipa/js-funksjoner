@@ -202,12 +202,9 @@ console.log(erGammelNok(18,18));
 //     billettpris(true)  -> 100
 //     billettpris(false) -> 150
 //     Tips: bruk if og else.
-function billettpris(VG_nummer) {
-  if (VG_nummer == 1){
-    return 100;
-  } else {
-    return 150;
-  }
+function billettpris(erVG1) {
+  if (erVG1){return 100;}
+  else {return 150;}
 }
 
 
@@ -224,16 +221,48 @@ function billettpris(VG_nummer) {
 //
 //     Tips: andel = antall i valgt fraksjon / totalt * 100
 function velgFraksjon(alliance, horde, valg) {
-  // LØSNING
+  const ledig_plass_dictonary = {
+    "alliance" : null,
+    "horde" : null
+  }
+  if (alliance < horde) {
+    ledig_plass_dictonary["Alliance"] = true;
+    ledig_plass_dictonary["Horde"] = false;
+  } else if (alliance > horde) {
+    ledig_plass_dictonary["Alliance"] = false;
+    ledig_plass_dictonary["Horde"] = true;
+  } else {
+    ledig_plass_dictonary["Horde"] = true;
+    ledig_plass_dictonary["Alliance"] = true;
+  }
+  console.log(valg);
+  console.log(ledig_plass_dictonary[valg]);
+  if (ledig_plass_dictonary[valg] == null) {
+    return "error your choice of faction is an invalid faction";
+  } else if (ledig_plass_dictonary[valg]) {
+    return `Welcome to the ${valg}!`;
+  } else {
+    return "The faction is currently unavailable on this ruleset due to population imbalance";
+  }
 }
+console.log("\nOppgave 13:");
+console.log(velgFraksjon(5000, 5000, "Horde"));
+console.log(velgFraksjon(4500, 5500, "Alliance"));
+console.log(velgFraksjon(4500, 5500, "Horde"));
 
 // Oppgave 14: Hvor mange runder fikk laget MER enn grensen?
 //     antallOver(runder, 100) -> 3
 //     Tips: samme oppskrift som antallUnderNull() i oppgave 6.
 function antallOver(poeng, grense) {
-  // LØSNING
+  let _antall_over = 0;
+  for (let i = 0; i < poeng.length; i++) {
+    if (grense < poeng[i]) {_antall_over++}
+  }
+  return _antall_over;
 }
-
+console.log("\nOppgave 14:");
+console.log(antallOver(runder, 100));
+console.log(antallOver(runder, 90));
 
 // #####################################################
 // DEL 3: BREILAN (oppgave 15–17)
@@ -274,7 +303,6 @@ const resultater = [
   { navn: "Jonas", poeng: 480 },
 ];
 
-
 // ---------- GRØNN ----------
 
 // Oppgave 15: BreiLAN trenger en funksjon som sjekker aldersgrensen før
@@ -283,8 +311,11 @@ const resultater = [
 //     kanDelta(16, "GTA 6")    -> false
 //     kanDelta(16, "Fortnite") -> true
 function kanDelta(alder, spill) {
-  // LØSNING
+  return erGammelNok(alder, aldersgrenser[spill]);
 }
+console.log("\nOppgave 15:");
+console.log(kanDelta(16, "GTA 6"));
+console.log(kanDelta(16, "Fortnite"));
 
 
 // ---------- GUL ----------
@@ -293,8 +324,15 @@ function kanDelta(alder, spill) {
 //     Gjenbruk billettpris() fra oppgave 12! deltakere[i].vg1 er true eller false.
 //     totalInntekt(deltakere) -> 700
 function totalInntekt(deltakere) {
-  // LØSNING
+  let _total_inntekt = 0;
+  for (let deltaker_nummer = 0; deltaker_nummer < deltakere.length; deltaker_nummer++) {
+    _total_inntekt += billettpris(deltakere[deltaker_nummer].vg1);
+  }
+  return _total_inntekt;
 }
+console.log("\nOppgave 16:");
+console.log(totalInntekt(deltakere));
+
 
 
 // ---------- RØD ----------
@@ -304,8 +342,33 @@ function totalInntekt(deltakere) {
 //     UTEN .sort(). Arrayen resultater skal ikke endres.
 //     toppTre(resultater) -> ["Kari", "Jonas", "Ali"]
 function toppTre(resultater) {
-  // LØSNING
+  // Lager en array for bare poeng
+  const poeng_array = []
+  for (let i = 0; i < resultater.length; i++) {
+    poeng_array.push(resultater[i].poeng);
+  }
+  // Sorterer poengen fra minst til størst
+  // og så snur rekkefølgen på den
+  const baklengst_sortert_poeng = sorterStigende(poeng_array);
+  const sortert_poeng = [];
+  // <= 2 pga top 3, 0,1,2.
+  for (let i = 0; i <= 2; i++) {
+    sortert_poeng.push(baklengst_sortert_poeng[baklengst_sortert_poeng.length - i - 1]);
+  }
+  //console.log(sortert_poeng);
+  // Leser av sortert poeng og resultater.poeng og når de er det samme setter resultater.navn inn i _topp_tre
+  let _topp_tre = [];
+  for (let i = 0; i < sortert_poeng.length; i++) {
+    for (let j = 0; j < resultater.length; j++) {
+      if (resultater[j].poeng == sortert_poeng[i]) {
+        _topp_tre.push(resultater[j].navn);
+      }
+    }
+  }
+  return _topp_tre;
 }
+console.log("\nOppgave 17:");
+console.log(toppTre(resultater));
 
 
 
@@ -316,6 +379,9 @@ function toppTre(resultater) {
 // #####################################################
 //
 // Skriv en kort egenvurdering av arbeidet ditt. Skriv rett etter kolonet.
-// Dette fikk jeg godt til:
-// Dette var vanskelig:
-// Dette vil jeg øve mer på:
+// Dette fikk jeg godt til:  Jeg synnes selv at jeg fikk alt til relativt godt.
+// Dette var vanskelig:      Jeg prøvde å få til en manual sorterings algoritme der
+//                           brukeren skulle besteme om at to verdier var i rekkefølge for vært sett med verdier,
+//                           men det ble litt for mye siden jeg også lærer meg C og det var ingen rask og enkel løsning på nett.
+// Dette vil jeg øve mer på: C og hvordan kan bli bedre på å lære andre å kode, jeg hjalp Anders og gjorde mitt beste på å
+//                           forklare logiken og stegene for algoritmene.
